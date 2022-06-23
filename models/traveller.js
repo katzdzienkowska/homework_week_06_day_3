@@ -3,9 +3,10 @@ const Traveller = function(journeys) {
 };
 
 Traveller.prototype.getJourneyStartLocations = function() {
-  return this.journeys.map((journey) => {
+const locations = this.journeys.map((journey) => {
     return journey.startLocation;
   });
+  return locations;
 };
 
 Traveller.prototype.getJourneyEndLocations = function () {
@@ -33,14 +34,27 @@ Traveller.prototype.calculateTotalDistanceTravelled = function () {
 };
 
 Traveller.prototype.getUniqueModesOfTransport = function () {
-  let result = [];
-  this.journeys.forEach((journey) => {
-    transportWay = journey.transport;
-    result.push(transportWay);
-    return result;
+  // return this.journeys.map((journey) => {
+  //   return journey.transport;
+  // }).filter((transport, index, array) => {
+  //   return array.indexOf(transport) === index;
+  // });
+
+  const allTransports = this.journeys.map((journey) => {
+    return journey.transport;
+  })
+  // allTransports = ['train', 'train', 'aeroplane', 'car', 'ferry']
+  const filteredTransport = allTransports.filter((transport, index, array) => {
+    console.log('transport:', transport);
+    console.log('index:', index);
+    console.log('indexOf() result:', allTransports.indexOf(transport));
+    return allTransports.indexOf(transport) === index;
   });
-//// cannot make it work :(
+  return filteredTransport;
 };
 
+//return array(what we are returning from the first method).indexOf(transport) 
+// then we are asking for the index position of the first transport, it gives us: 0, 0, 2 and 4 ['train', 'train', 'aeroplane', 'car', 'ferry']
+// comparing the array of non unique things, if it's unique I will put that in the array, if not, I won't
 
 module.exports = Traveller;
